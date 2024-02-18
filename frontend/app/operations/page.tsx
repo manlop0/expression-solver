@@ -11,7 +11,7 @@ type OperationData = {
 };
 
 
-export default function Page() {
+export default function OperationsPage() {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [data, setData] = useState<OperationData[]>([]);
   const [formData, setFormData] = useState<OperationData[]>(data)

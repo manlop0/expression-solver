@@ -3,7 +3,7 @@ import ExpressionForm from "@/components/ExpressionForm";
 import ExpressionsList from "@/components/ExpressionsList";
 import { useState } from "react";
 
-export default function Home() {
+export default function ExpressionsPage() {
 
   const [submiting, setSubmiting] = useState<boolean>(false);
   const [responseStatus, setResponseStatus] = useState<number>(0);

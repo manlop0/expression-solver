@@ -12,7 +12,7 @@ type WorkersData = {
   workingon: string;
 };
 
-export default function Page() {
+export default function WorkersPage() {
   const [data, setData] = useState<WorkersData[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
 

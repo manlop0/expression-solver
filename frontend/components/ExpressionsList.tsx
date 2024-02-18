@@ -40,7 +40,7 @@ export default function ExpressionsList({submiting}:{submiting:boolean}) {
           <Spinner />
         </div>
       ) : (
-        <div className="flex flex-col gap-8">
+        <div className="flex flex-col items-center gap-8">
           {data.map((el) => (
             <ExpressionCard key={`exp${el.id}`} data={el}/>
           ))}
