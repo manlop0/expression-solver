@@ -13,6 +13,10 @@ type Data = {
 };
 
 export default function ExpressionCard({ data }: { data: Data }) {
+  console.log(data.date)
+  const d = new Date(data.date)
+  console.log(d)
+  console.log(d.toLocaleDateString())
   return (
     <div
       className="flex max-w-xl w-fit items-center min-h-[100px] min-w-[320px] h-fit py-2 px-6 bg-secondary rounded-xl gap-4 shadow-lg"
@@ -35,7 +39,7 @@ export default function ExpressionCard({ data }: { data: Data }) {
             <p>Solved</p>
           )}
         </div>
-        <p className="text-gray-300 text-sm">{`CreatedAt: ${data.date.toLocaleDateString()} ${data.date.toLocaleTimeString()}`}</p>
+        <p className="text-gray-300 text-sm">{`CreatedAt: ${d.toLocaleDateString()} ${d.toLocaleTimeString()}`}</p>
       </div>
     </div>
   );
