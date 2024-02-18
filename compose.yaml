@@ -1,0 +1,85 @@
+services:
+  frontend:
+    container_name: frontend
+    image: nextjs:1.0.0
+    restart: always
+    build:
+      context: ./frontend
+      dockerfile: next.dockerfile
+      args:
+        NEXT_PUBLIC_API_URL: http://localhost:8000
+    ports:
+      - 3000:3000
+    depends_on:
+      - orchestrator
+
+  orchestrator:
+    container_name: orchestrator
+    image: orchestrator:1.0.0
+    restart: always
+    build:
+      context: ./backend/orchestrator
+      dockerfile: go.dockerfile
+    environment:
+      DATABASE_URL: "postgresql://postgres:postgres@db:5432/postgres?sslmode=disable"
+      REDIS_URL: "redis:6379"
+    ports:
+      - "8000:8000"
+    depends_on:
+      - agent
+
+  agent:
+    container_name: agent
+    image: agent:1.0.0
+    restart: always
+    build:
+      context: ./backend/agent
+      dockerfile: go.dockerfile
+    environment:
+      DATABASE_URL: "postgresql://postgres:postgres@db:5432/postgres?sslmode=disable"
+      NUM_OF_WORKERS: "5"
+      REDIS_URL: "redis:6379"
+    ports:
+      - "8010:8010"
+
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+
+  db:
+    container_name: db
+    image: postgres:14.11-alpine3.19
+    restart: always
+    environment:
+      POSTGRES_USER: "postgres"
+      POSTGRES_PASSWORD: "postgres"
+      POSTGRES_DB: "postgres"
+    ports:
+      - 5432:5432
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  redis:
+    container_name: redis
+    restart: always
+    image: redis:7.2.4-alpine
+    ports:
+      - 6379:6379
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    volumes:
+      - redis_data:/data
+
+volumes:
+  pgdata:
+  redis_data:
