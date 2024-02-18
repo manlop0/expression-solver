@@ -24,7 +24,6 @@ export default function ExpressionCard({ data }: { data: Data }) {
       ) : (
         <FontAwesomeIcon icon={faCheckCircle} fontSize={48} color="#ffffff"/>
       )}
-      {/* ДОБАВИТЬ DATE КУДА НИБУДЬ */}
       <div className="flex flex-col w-full items-center">
         <div className=" text-xl">{`${data.value}=${data.result ? data.result : "?"}`}</div>
         <div className="text-gray-200 text-base">
@@ -36,6 +35,7 @@ export default function ExpressionCard({ data }: { data: Data }) {
             <p>Solved</p>
           )}
         </div>
+        <p className="text-gray-300 text-sm">{`CreatedAt: ${data.date.toLocaleDateString()} ${data.date.toLocaleTimeString()}`}</p>
       </div>
     </div>
   );
