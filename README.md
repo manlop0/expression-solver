@@ -2,6 +2,9 @@
 
 
 ## Структура приложения
+
+![alt text](https://github.com/manlop0/expression-solver/blob/main/struct.drawio)
+
 Приложение докеризировано и состоит из 5 контейнеров:
 ### 1. frontend
    фронтенд, написанный на nextjs
